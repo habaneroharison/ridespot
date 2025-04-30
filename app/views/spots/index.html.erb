@@ -1,0 +1,14 @@
+<h1>ツーリングスポット一覧（都道府県別）</h1>
+
+<% @grouped_spots.each do |prefecture, spots| %>
+  <h2>▼ <%= prefecture.presence || "未設定の地域" %></h2>
+
+  <% spots.each do |spot| %>
+    <div style="margin-left: 20px;">
+      <h3><%= link_to spot.name, spot_path(spot) %></h3>
+      <p><%= truncate(spot.description, length: 100) %></p>
+    </div>
+  <% end %>
+
+  <hr>
+<% end %>

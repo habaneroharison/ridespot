@@ -1,0 +1,16 @@
+<h1 style="text-align: center; margin-bottom: 30px;"><%= @location %>のツーリングスポット</h1>
+
+<% if @spots.any? %>
+  <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 20px;">
+    <% @spots.each do |spot| %>
+      <div style="width: 300px; background-color: #ffffff; border-radius: 10px; padding: 20px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
+        <h3 style="margin-bottom: 10px;">
+          <%= link_to spot.name, spot_path(spot), style: "text-decoration: none; color: #0077cc;" %>
+        </h3>
+        <p style="font-size: 14px; color: #666;"><%= truncate(spot.description, length: 100) %></p>
+      </div>
+    <% end %>
+  </div>
+<% else %>
+  <p style="text-align: center; margin-top: 50px; font-size: 20px;">まだこの地域のスポットは投稿されていません。</p>
+<% end %>

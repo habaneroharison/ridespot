@@ -1,0 +1,31 @@
+<!-- app/views/spots/show.html.erb -->
+<h2>このスポットの投稿</h2>
+
+<%= form_with model: [@spot, Post.new], local: true, html: { multipart: true } do |f| %>
+  <div>
+    <%= f.label :body, "コメント" %><br>
+    <%= f.text_area :body %>
+  </div>
+
+  <div>
+    <%= f.label :image, "画像（任意）" %><br>
+    <%= f.file_field :image %>
+  </div>
+
+  <%= f.submit "投稿する" %>
+<% end %>
+
+<hr>
+
+<% @spot.posts.each do |post| %>
+  <div>
+    <p><strong><%= post.user.email %>：</strong> <%= post.body %></p>
+    <% if post.image.attached? %>
+      <%= image_tag post.image, size: "300x200" %>
+    <% end %>
+    <% if post.user == current_user %>
+      <%= link_to "削除", [@spot, post], method: :delete, data: { confirm: "削除する？" } %>
+    <% end %>
+  </div>
+  <hr>
+<% end %>
