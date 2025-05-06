@@ -1,0 +1,12 @@
+<div class="profile-card">
+  <h2>マイページ</h2>
+  <div class="user-info">
+    <div class="user-detail">
+      <strong>名前:</strong> <%= @user.nickname || '未設定' %>
+    </div>
+    <div class="user-detail">
+      <strong>メールアドレス:</strong> <%= @user.email %>
+    </div>
+  </div>
+  <%= link_to 'プロフィールを編集', edit_user_registration_path, class: 'edit-profile-btn' %>
+</div>

@@ -1,0 +1,29 @@
+<h1 class="form-title">新しいツーリングスポットを投稿</h1>
+
+<div class="spot-form">
+  <%= form_with model: @spot, local: true do |f| %>
+    <div class="form-group">
+      <%= f.label :name, "スポット名" %>
+      <%= f.text_field :name, class: "form-control" %>
+    </div>
+
+    <div class="form-group">
+      <%= f.label :description, "説明" %>
+      <%= f.text_area :description, rows: 4, class: "form-control" %>
+    </div>
+
+    <div class="form-group">
+      <%= f.label :location, "都道府県" %>
+      <%= f.select :location, prefecture_options, prompt: "選択してください", class: "form-control" %>
+    </div>
+
+    <div class="form-group">
+      <%= f.label :images, "画像（最大3枚）" %>
+      <%= f.file_field :images, multiple: true, accept: 'image/*', class: "form-control" %>
+    </div>
+
+    <div class="form-group">
+      <%= f.submit "投稿する", class: "submit-btn" %>
+    </div>
+  <% end %>
+</div>

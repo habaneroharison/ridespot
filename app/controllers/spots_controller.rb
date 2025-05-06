@@ -1,4 +1,6 @@
 class SpotsController < ApplicationController
+
+  before_action :authenticate_user!, only: [:new, :create]
   
   REGIONS = {
     "北海道・東北" => ["北海道", "青森県", "岩手県", "宮城県", "秋田県", "山形県", "福島県"],
@@ -23,13 +25,14 @@ class SpotsController < ApplicationController
   end
 
   def create
-    @spot = Spot.new(spot_params)
-    if @spot.save
-      redirect_to @spot, notice: "スポットを登録しました"
-    else
-      render :new
-    end
+    @spot = current_user.spots.build(spot_params)
+  if @spot.save
+    redirect_to @spot, notice: "スポットを投稿しました！"
+  else
+    render :new, status: :unprocessable_entity
   end
+    end
+
 
   def prefectures
     @regions = REGIONS
@@ -42,6 +45,6 @@ class SpotsController < ApplicationController
   private
 
   def spot_params
-    params.require(:spot).permit(:name, :description, :location, :image)
+    params.require(:spot).permit(:name, :description, :location, images: [])
   end
 end
