@@ -1,16 +1,48 @@
+<!-- app/views/layouts/application.html.erb -->
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Ridespot</title>
-    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>RIDE.SPOT</title>
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
 
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
-    <%= javascript_importmap_tags %>
+    <%= javascript_include_tag "application", "data-turbo-track": "reload", defer: true %>
   </head>
 
   <body>
-    <%= yield %>
+    <header style="background: #333; color: white; padding: 10px;">
+      <nav style="display: flex; gap: 20px; align-items: center;">
+        <%= link_to "🏍 RIDE.SPOT", root_path, style: "color: white; text-decoration: none; font-weight: bold;" %>
+
+        <%= link_to "スポット一覧", spots_path, style: "color: white; text-decoration: none;" %>
+        <%= link_to "都道府県から探す", root_path, style: "color: white; text-decoration: none;" %>
+        
+        <% if user_signed_in? %>
+        <%= link_to "スポット投稿", new_spot_path, style: "color: white; text-decoration: none;" %>
+        <% end %>
+        <% if user_signed_in? %>
+          <span style="margin-left: auto;">
+            <%= link_to "ログアウト", destroy_user_session_path, method: :delete, style: "color: white; text-decoration: none;" %>
+          </span>
+        <% else %>
+          <span style="margin-left: auto;">
+            <%= link_to "ログイン", new_user_session_path, style: "color: white; text-decoration: none;" %> |
+            <%= link_to "新規登録", new_user_registration_path, style: "color: white; text-decoration: none;" %>
+          </span>
+        <% end %>
+      </nav>
+    </header>
+
+    <main style="padding: 20px;">
+      <% if notice %>
+        <p style="color: green;"><%= notice %></p>
+      <% end %>
+      <% if alert %>
+        <p style="color: red;"><%= alert %></p>
+      <% end %>
+
+      <%= yield %>
+    </main>
   </body>
 </html>
